@@ -15,6 +15,7 @@ public class CreateReceiptRequestTest {
 
     private final Validator validator = Validators.newValidator();
 
+
     @Test
     public void testValid() {
         CreateReceiptRequest receipt = new CreateReceiptRequest();
