@@ -46,7 +46,7 @@
         // This is the idiomatic way to ensure that JQuery does not
         // execute until the page has loaded
 
-        const api = ""; // <- do not need a root api URL if this page is served directly by the API
+        const api = "http://localhost:8080"; // <- do not need a root api URL if this page is served directly by the API
         const receiptEndpoint = api + "/receipts";
         const tagsEndpoint = api + "/tags";
 
@@ -72,7 +72,7 @@
         }
 
         function onButtonClickAddTag(event) {
-            var divToAddInputBox = event.target.parentNode.parentNode;
+            var divToAddInputBox = event.target.parentNode;
             $(`<input class="tag_input" onkeydown="putTagDiv(event, ${divToAddInputBox.id})"/>`).appendTo(divToAddInputBox);
         }
 
@@ -89,12 +89,11 @@
                         tagsDIV += `<div class="tagValue">${receipt.tags[j]}</div>`;
                     }
 
-                    $(`<div id=${receipt.id} class="receipt">${receipt.merchantName}
-                            <div>
-                                <span class="receiptTag">${receipt.value}</span>
+                    $(`<div id=${receipt.id} class="receipt">
+                                <div class="merchant">${receipt.merchantName}</div>
+                                <div class="amount">${receipt.value}</div>
                                 ${tagsDIV}
                                 <div onclick="onButtonClickAddTag(event)" class="add-tag">+tag</div>
-                            </div>
                         </div>`)
                         .appendTo($("#receiptList"));
                 }
@@ -153,7 +152,7 @@
 <body>
 <DIV id="container">
     <h1>My receipts</h1>
-    <div onclick="onButtonClickAdd(event)" class="button">+</div>
+    <div id="add-receipt" onclick="onButtonClickAdd(event)" class="button">+</div>
         <div id="receiptInputForm">
             <div>
                 <p>Merchant</p>
