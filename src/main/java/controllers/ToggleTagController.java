@@ -41,7 +41,9 @@ public class ToggleTagController {
     @Produces(MediaType.APPLICATION_JSON)
     public List<ReceiptResponse> getTag(@PathParam("tag") String tagName) {
         List<ReceiptsRecord> receiptRecords = receipts.getAllReceiptsByTag(tagName);
-        return receiptRecords.stream().map(ReceiptResponse::new).collect(toList());
+
+        return receiptRecords.stream().map((receiptRecord) -> new ReceiptResponse(receiptRecord, receipts.getAllTagsByReceipt(receiptRecord.getId()).stream().map((tagRecord) -> tagRecord.getTagName()).collect((toList())))).collect(toList());
+
     }
 
 }

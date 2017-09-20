@@ -2,6 +2,7 @@ package dao;
 
 import api.ReceiptResponse;
 import generated.tables.records.ReceiptsRecord;
+import generated.tables.records.TagsRecord;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
@@ -43,5 +44,13 @@ public class ReceiptDao {
                 .where(TAGS.TAG_NAME.eq(tagName))
                 .fetchInto(RECEIPTS);
 
+    }
+
+    public List<TagsRecord> getAllTagsByReceipt(int receiptID) {
+        return dsl.select()
+                .from(TAGS)
+                .join(RECEIPTS).on(TAGS.RECEIPT_ID.eq(RECEIPTS.ID))
+                .where(TAGS.RECEIPT_ID.eq(receiptID))
+                .fetchInto(TAGS);
     }
 }
